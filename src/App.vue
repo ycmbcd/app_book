@@ -12,7 +12,7 @@ export default {
 
 <style>
 .top_bar{
-    background: #144c71;
+    background: rgba(20, 76, 113, .9);
     height: .84rem;
     line-height: .84rem;
     position: fixed;

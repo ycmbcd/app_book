@@ -9,13 +9,13 @@
                     <a href="#/BookContent">第一章 休息休息</a>
                 </li>
                 <li class="list_2">
-                    <a href="#/BookContent">1.1</a>
+                    <a href="#/BookContent/1">1.1</a>
                 </li>
                 <li class="list_2">
-                    <a href="#/BookContent">1.2</a>
+                    <a href="#/BookContent/2">1.2</a>
                 </li>
                 <li class="list_2">
-                    <a href="#/BookContent">1.3</a>
+                    <a href="#/BookContent/3">1.3</a>
                 </li>
                 <li>
                     <a href="#/BookContent">第二章 休息休息吧</a>

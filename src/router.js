@@ -14,15 +14,18 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: '/',
-        component: SmpIndex
+        component: SmpIndex,
+        meta: {index: 1}
     },
     {
         path:"/BookList",
-        component: BookList
+        component: BookList,
+        meta: {index: 2}
     },
     {
-        path:"/BookContent",
-        component: BookContent
+        path:"/BookContent/:txtid",
+        component: BookContent,
+        meta: {index: 3}
     },
     {
         path:"/BookPic",

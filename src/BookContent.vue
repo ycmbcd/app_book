@@ -7,11 +7,11 @@
         </div>
         <div class="t_box" v-bind:class="txt_bg">
             <div class="txt" @click="show_menu" :style="{'fontSize':fSize+'rem','lineHeight':lHight+'rem'}">
-        
+                {{txt}}
             </div>
             <div class="page_bar">
-                <div class="page_pre page_btn">上一篇</div>
-                <div class="page_next page_btn">下一篇</div>
+                <div @click="readTxt('pre')" v-show="showPre===1" class="page_pre page_btn">上一篇</div>
+                <div @click="readTxt('next')" v-show="showNext===1" class="page_next page_btn">下一篇</div>
                 <div class="clear_both"></div>
             </div>
         </div>
@@ -152,9 +152,16 @@
 }
 </style>
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
+            prePage:'',
+            nextPage:'',
+            showPre: 1,
+            showNext: 1,
+            txt: '',
             open_menu: 0,
             txt_bg:'bai',
             fSize: .4, // 字体
@@ -182,10 +189,42 @@ export default {
                 this.lHight = .8
             }
             if(e === 4){
-                this.fSize = .6
+                this.fSize = .6                                     
                 this.lHight = 1
             }
+        },
+        readTxt(page){
+            // 获取现有 章节id
+            var txt_id = this.$route.params.txtid;
+            
+            // 计算 章节id
+            var _this = this;
+            if(page == 'pre'){
+                txt_id = Number(txt_id) - 1; 
+            }
+            if(page == 'next'){
+                txt_id = Number(txt_id) + 1; 
+            }
+            // 跳转 章节id
+            this.$router.push({
+                path: '/BookContent/' + txt_id
+            })
+
+            // 获取 章节内容
+            axios.get("/static/book/" + txt_id + ".txt").then(function(res){
+                _this.txt = res.data;
+            })
+ 
+            // 按钮阈值
+            if(txt_id == '1'){
+                _this.showPre = 0
+            }else{
+                _this.showPre = 1
+            }
+
         }
+    },mounted() {
+        this.readTxt();
     }
 }
 </script>

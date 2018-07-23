@@ -3,34 +3,34 @@
 <swiper :options="swiperOption" ref="mySwiper" >
 <!-- slides -->
 <swiper-slide v-for="item of list" :key="item.id">
-<img @click="bigShow(item.img);getWidth()" class="swiper-img" v-bind:src="item.img" />
+<img class="swiper-img" v-bind:src="item.img" />
 </swiper-slide>
 <!-- Optional controls -->
-<div class="swiper-pagination" slot="pagination"></div>
+<!-- <div class="swiper-pagination" slot="pagination"></div> -->
 </swiper>
 <div v-show="isBigShow" id="big_show">
-<div :class="{'to_90':toSpin,'to_0':!toSpin}">
-<img :src="bigShowMe" id="big_pic" @click="hideBtn=!hideBtn"  v-bind:style="{width:picWidth,height:picHeight,marginTop:picMt}"/>
-</div>
+    <div :class="{'to_90':toSpin,'to_0':!toSpin}">
+    <img :src="bigShowMe" id="big_pic" @click="hideBtn=!hideBtn"  v-bind:style="{width:picWidth,height:picHeight,marginTop:picMt}"/>
+    </div>
 
-<div :class="{'to_90':toSpin,'to_0':!toSpin}" id="close" v-show="hideBtn" @click="isBigShow=0" class="fa fa-window-close fa-2x"> 关闭</div>
-<div :class="{'to_90':toSpin,'to_0':!toSpin}" id="zhuan" v-show="hideBtn" @click="toSpin=!toSpin;getWidth()"><i class="fa fa-undo fa-2x"> 旋转</i></div>
+    <div :class="{'to_90':toSpin,'to_0':!toSpin}" id="close" v-show="hideBtn" @click="isBigShow=0" class="fa fa-window-close fa-2x"> 关闭</div>
+    <div :class="{'to_90':toSpin,'to_0':!toSpin}" id="zhuan" v-show="hideBtn" @click="toSpin=!toSpin;getWidth()"><i class="fa fa-undo fa-2x"> 旋转</i></div>
 </div>
 </div>
 </template>
 
 <style scooped>
-.fa{
-    text-shadow: 1px 1px 4px #000;
+.fa {
+  text-shadow: 1px 1px 4px #000;
 }
 #big_show {
   position: absolute;
   z-index: 20000;
-  top: 0;
+  bottom: 0;
   left: 0;
   background: #2a2a2a;
   width: 100%;
-  height: 900px;
+  height: 100%;
 }
 .to_90 {
   transition: 0.3s;
@@ -53,13 +53,13 @@
 #close {
   position: fixed;
   top: 1rem;
-  right: .6rem;
+  right: 0.6rem;
   color: #fff;
 }
 #zhuan {
   position: fixed;
   top: 1rem;
-  left: .6rem;
+  left: 0.6rem;
   color: #fff;
 }
 </style>
@@ -70,8 +70,8 @@ export default {
   name: "VueSwiper",
   data() {
     return {
-        picMt:0,
-        hideBtn:1,
+      picMt: 0,
+      hideBtn: 1,
       picWidth: "100%",
       picHeight: "100%",
       toSpin: 0,
@@ -80,11 +80,12 @@ export default {
       swiperOption: {
         loop: true,
         spaceBetween: 30,
+        effect: "fade",
         autoplay: {
           disableOnInteraction: false
         },
         speed: 1000,
-        delay: 3000,
+        delay: 1500,
         pagination: {
           el: ".swiper-pagination",
           clickable: true
@@ -125,8 +126,8 @@ export default {
         this.picWidth = "";
         this.picMt = 0;
       } else {
-          this.picMt = '3rem'
-          this.picHeight = "";
+        this.picMt = "3rem";
+        this.picHeight = "";
         this.picWidth = document.body.clientWidth + "px";
       }
     }

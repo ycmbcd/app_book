@@ -8,22 +8,27 @@
                 <source src="static/1.mp3" type="audio/mpeg">
             </audio>
         </div>
-        <vue-swiper style="margin-top:1.1rem"></vue-swiper>
+        <vue-swiper style="margin-top:1.1rem;margin-bottom:.3rem;"></vue-swiper>
+        <div class="read_btn" v-show="readPage!=0" @click="toPage()">继续阅读</div>
+        <div class="read_btn" v-show="readPage==0" @click="toPage(1)">开始阅读</div>
         <div @click="bookList=1" class="btn">目录</div>
         <div id="book_lists" v-show="bookList">
             <div @click="bookList=0" id="close_lists" class="fa fa-window-close fa-3x"></div>
             <book-list :hiddenBack="1"></book-list>
         </div>
+        <swiper-bottom></swiper-bottom>
     </div>
 </template>
 
 <script>
 import VueSwiper from './VueSwiper'
 import BookList from './BookList'
+import SwiperBottom from './SwiperBottom'
 
 export default {
     data () {
         return {
+            readPage: 0,
             show_pic: 0,
             bookList: 0,
             nowLrc: '【 岁月的记忆 】',
@@ -34,7 +39,8 @@ export default {
     },
     components:{
         VueSwiper,
-        BookList
+        BookList,
+        SwiperBottom
     },
     mounted() {
         let _this = this;
@@ -49,10 +55,24 @@ export default {
         });
 
         _this.lrcObj = this.mountLrc();
-
+        this.readTo();
         // console.log(this.lrc)
     },
     methods:{
+        // 阅读进度
+        readTo(){
+            var keys = JSON.parse(localStorage.getItem('key'));
+            this.readPage = keys.txtid;
+        },
+        // 跳转进度
+        toPage(e){
+            if(e==1){
+                this.readPage = 1;
+            }
+            this.$router.push({
+                path: '/BookContent/' + this.readPage
+            })
+        },
         clickMusic () {
             let _this = this;
             this.player = document.querySelector("#player");
@@ -81,6 +101,19 @@ export default {
 </script>
 
 <style scoped>
+.read_btn{
+    text-align: center;
+    line-height: .6rem;
+    color: #FFF;
+    font-size: .3rem;
+    background: #7393a2;
+    width: 40%;
+    margin: 0 auto;
+    border-radius: 4px;
+    height: .6rem;
+    text-shadow: 1px 1px 1px #000;
+    box-shadow: 1px 1px 1px #545454;
+}
 #container{
     background: #FFF;
 }
@@ -89,6 +122,7 @@ export default {
     height: 100%;
     position: fixed;
     overflow: scroll;
+    z-index: 200;
 }
 #close_lists{
     position: fixed;

@@ -214,6 +214,13 @@ export default {
             axios.get("/static/book/" + txt_id + ".txt").then(function(res){
                 _this.txt = res.data;
             })
+
+            // 存储章节进度
+            const read_to = {
+                txtid: txt_id
+            }
+
+            localStorage.setItem('key', JSON.stringify(read_to));
  
             // 按钮阈值
             if(txt_id == '1'){
